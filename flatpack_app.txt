@@ -1,0 +1,26 @@
+Zen	app.zen_browser.zen	1.19.2b	stable	flathub	system
+Tauno Serial Plotter	art.taunoerik.tauno-serial-plotter	1.20.4	stable	flathub	system
+Arduino IDE v2	cc.arduino.IDE2	2.3.8	stable	flathub	system
+calibre	com.calibre_ebook.calibre	9.4.0	stable	flathub	system
+OBS Studio	com.obsproject.Studio	32.1.0	stable	flathub	system
+PlayOnLinux 4	com.playonlinux.PlayOnLinux4	4.4	stable	flathub	system
+Snes9x	com.snes9x.Snes9x	1.63	stable	flathub	system
+Vesktop	dev.vencord.Vesktop	1.6.5	stable	flathub	system
+CPU-X	io.github.thetumultuousunicornofdarkness.cpu-x	5.4.0	stable	flathub	system
+QMPlay2	io.github.zaps166.QMPlay2	25.09.11	stable	flathub	system
+LibreWolf	io.gitlab.librewolf-community	148.0.2-2	stable	flathub	system
+Obsidian	md.obsidian.Obsidian	1.12.4	stable	flathub	system
+PCSX2	net.pcsx2.PCSX2	@GIT_VERSION@	stable	pcsx21-origin	system
+shadPS4	net.shadps4.shadPS4	0.14.0	stable	flathub	system
+Dolphin Emulator	org.DolphinEmu.dolphin-emu	2512	stable	flathub	system
+FileZilla	org.filezillaproject.Filezilla	3.69.5	stable	flathub	system
+Ghidra	org.ghidra_sre.Ghidra	12.0.4	stable	flathub	system
+Apostrophe	org.gnome.gitlab.somas.Apostrophe	3.4	stable	flathub	system
+KAlgebra	org.kde.kalgebra	25.12.2	stable	flathub	system
+KTouch	org.kde.ktouch	25.12.3	stable	flathub	system
+KiCad	org.kicad.KiCad	9.0.7	stable	flathub	system
+RetroArch	org.libretro.RetroArch	1.22.2	stable	flathub	system
+ONLYOFFICE Desktop Editors	org.onlyoffice.desktopeditors	9.3.1	stable	flathub	system
+Signal Desktop	org.signal.Signal	8.2.0	stable	flathub	system
+wxHexEditor	org.wxhexeditor.wxHexEditor	0.24	stable	flathub	system
+yuzu	org.yuzu_emu.yuzu	mainline-0-1734	stable	flathub	system
