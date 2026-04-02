@@ -478,15 +478,15 @@ pacman_configure() {
   log "Configuring Pacman..."
 
   # Parallel downloads
-  update_config /etc/pacman.conf \
-    "^#ParallelDownloads" \
-    --msg "Enabling parallel downloads"
+#  update_config /etc/pacman.conf \
+#    "^#ParallelDownloads" \
+#    --msg "Enabling parallel downloads"
 
   # Set to 15 parallel downloads
-  update_config /etc/pacman.conf \
-    "^ParallelDownloads" \
-    --value "15" \
-    --msg "Set parallel downloads to 15"
+#  update_config /etc/pacman.conf \
+#    "^ParallelDownloads" \
+#    --value "15" \
+#    --msg "Set parallel downloads to 15"
 
   # Color output
   update_config /etc/pacman.conf \
