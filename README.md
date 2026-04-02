@@ -2,6 +2,6 @@
 
 example:
 `
-cd dotfiles
+cd .dotfiles
 stow nvim
 `
