@@ -154,9 +154,9 @@ MAIN_PACKAGES=(
 
 CLEANUP_PACKAGES=(
   # System utilities
-  vim
+#  vim
   # Applications
-  kate
+#  kate
 )
 
 AUR_PACKAGES=(
