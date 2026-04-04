@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
@@ -70,7 +77,14 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(z fzf git zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(
+	git
+	github
+	docker
+	zsh-syntax-highlighting
+	zsh-autosuggestions
+)
+
 
 source $ZSH/oh-my-zsh.sh
 
@@ -85,11 +99,11 @@ source $ZSH/oh-my-zsh.sh
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
-#   export EDITOR='nvim'
+#   export EDITOR='mvim'
 # fi
 
 # Compilation flags
-# export ARCHFLAGS="-arch $(uname -m)"
+# export ARCHFLAGS="-arch x86_64"
 
 # Set personal aliases, overriding those provided by Oh My Zsh libs,
 # plugins, and themes. Aliases can be placed here, though Oh My Zsh
@@ -103,18 +117,18 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Custom configuration
-if [[ -f "/home/air/.zsh_custom_config" ]]; then
-    source "/home/air/.zsh_custom_config"
-fi
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 source /home/air/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Created by `pipx` on 2024-10-11 18:31:26
 export PATH="$PATH:/home/air/.local/bin"
-#source ~/powerlevel10k/powerlevel10k.zsh-theme
+source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-#[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 alias l="eza --icons=always"
 alias ll="eza -a --show-symlinks --icons=always"
 eval "$(zoxide init zsh)"
@@ -127,10 +141,14 @@ alias ts="NVIM_APPNAME=nvim-ts nvim"
 alias ya="yazi"
 alias cg="cargo generate --vcs none --git https://github.com/esp-rs/esp-idf-template cargo"
 export PATH=$PATH:/home/air/.platformio/penv/bin
-#export PATH=$PATH:/opt/zephyr-sdk-0.16.UTF-8
-#export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+export PATH=$PATH:/opt/zephyr-sdk-0.16.UTF-8
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 export PATH=~/.local/bin:"$PATH"
 export PATH="$PATH:~/.cargo/bin"
+# rust for esp32s3
+# if [ -f "$HOME/esp-idf/export.sh" ]; then
+    # source "$HOME/esp-idf/export.sh"
+# fi
