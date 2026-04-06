@@ -124,7 +124,7 @@ alias cd="z"
 alias esp="NVIM_APPNAME=nvim-esp32 nvim"
 alias v="NVIM_APPNAME=nvim nvim"
 alias ts="NVIM_APPNAME=nvim-ts nvim"
-alias ya="yazi"
+# alias ya="yazi"
 alias cg="cargo generate --vcs none --git https://github.com/esp-rs/esp-idf-template cargo"
 export PATH=$PATH:/home/air/.platformio/penv/bin
 #export PATH=$PATH:/opt/zephyr-sdk-0.16.UTF-8
@@ -134,3 +134,15 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 export PATH=~/.local/bin:"$PATH"
 export PATH="$PATH:~/.cargo/bin"
+
+function ya() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
+# Added by LM Studio CLI tool (lms)
+export PATH="$PATH:/home/air/.lmstudio/bin"
