@@ -1,0 +1,111 @@
+# Глобальні налаштування
+align=center
+color=#E0E0E0
+separator=true
+separator_block_width=10
+
+# [weather]
+# # label=☀️ 
+# markup=pango
+# separator=true
+# command=~/.config/i3/scripts/w.py Kharkiv
+# interval=1800
+# color=#FFFFFF
+
+[weather]
+full_text=☂ฺ ☀ฺ Weather ☂ฺ ☀ฺ
+# command=~/.config/i3/scripts/weather
+interval=1800
+color=#8ec07c
+#separator=true
+separator_block_width=20
+# Рівень гучності (PipeWire / Audio)
+# [volume]
+# label=🔊 
+# command=wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)"%"}'
+# interval=3
+# signal=10
+# color=#2ECC71
+
+[disk]
+label=💾 
+command=df -h / | awk 'NR==2 {print $4}'
+interval=30
+color=#2ECC71
+
+# Використання оперативної пам'яті (RAM)
+[memory]
+label=🧠 
+command=free -h | awk '/^Mem:/ {print $3 "/" $2}'
+interval=10
+color=#3498DB
+
+# [keyboard]
+# label=⌨️ 
+# command=setxkbmap -query | awk '/layout/ {print toupper($2)}' | cut -d, -f1
+# interval=once
+# signal=12
+# color=#9B59B6
+# [keyboard]
+# label=⌨️ 
+# command=if xset q | grep -q "LED mask:  00000000"; then echo "US"; else echo "UA"; fi
+# interval=once
+# signal=12
+# color=#9B59B6
+[keyboard]
+label=⌨️ 
+# command=xkb-switch | tr '[:lower:]' '[:upper:]'
+command=setxkbmap -query | awk '/layout/ {print toupper($2)}' | cut -d, -f1
+interval=once
+signal=12
+color=#9B59B6
+
+# Яскравість екрана ноутбука
+# [brightness]
+# label=☀️ 
+# command=brightnessctl -m | awk -F, '{print int(($3/$4)*100)"%"}'
+# interval=once
+# signal=11
+# color=#F1C40F
+
+# Бездротова мережа (Wi-Fi)
+[wifi]
+label=📶 
+command=WLAN=$(ip route | awk '/default/ {print $5}' | grep '^w'); if [ -n "$WLAN" ]; then iwgetid -r $WLAN; else echo "down"; fi
+interval=10
+color=#3498DB
+
+[cpu_usage]
+interval=1
+command=./cpu.sh
+min_width=⣾⣄ 100.00%
+
+# Температура процесора (важливо для ноутбуків)
+[temperature]
+label=🌡️ 
+command=sensors | awk '/Core 0/ {print $3}'
+interval=1
+color=#E74C3C
+
+# Рівень гучності (PipeWire / Audio)
+[volume]
+# label=🔊 
+# command=wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)"%"}'
+command=MUTED=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -o "MUTED"); VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}'); if [ "$MUTED" = "MUTED" ] || [ "$VOL" -eq 0 ]; then echo "🔇 MUTE"; else echo "🔊 $VOL%"; fi
+interval=once
+signal=10
+color=#2ECC71
+
+# Стан батареї (динамічний колір залежно від розряду)
+[battery]
+command=STATUS=$(acpi -b | awk -F, '{print $1}' | awk '{print $3}'); PERC=$(acpi -b | awk -F, '{print $2}' | tr -d ' %'); if [ "$STATUS" = "Charging" ]; then echo "⚡ $PERC%"; elif [ "$PERC" -le 20 ]; then echo "🪫 $PERC%"; else echo "🔋 $PERC%"; fi
+interval=10
+color=#E67E22
+
+# Дата та час
+[time]
+label=📅 
+# command=date '+%d.%m %H:%M'
+command=date '+%A_%u %B_%m %d %H:%M'
+interval=5
+color=#1ABC9C

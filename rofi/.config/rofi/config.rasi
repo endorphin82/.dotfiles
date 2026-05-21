@@ -1,0 +1,9 @@
+
+//@theme "/home/air/.local/share/rofi/themes/rounded-nord-dark.rasi"
+
+@theme "/usr/share/rofi/themes/material.rasi"
+
+configuration {
+    // font: "monospace 20";
+    font: "JetBrains Mono 20";
+  }

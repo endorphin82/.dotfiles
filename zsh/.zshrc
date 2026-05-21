@@ -108,7 +108,7 @@ if [[ -f "/home/air/.zsh_custom_config" ]]; then
     source "/home/air/.zsh_custom_config"
 fi
 source /home/air/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
+source /usr/share/nvm/init-nvm.sh
 # Created by `pipx` on 2024-10-11 18:31:26
 export PATH="$PATH:/home/air/.local/bin"
 #source ~/powerlevel10k/powerlevel10k.zsh-theme
@@ -117,8 +117,10 @@ export PATH="$PATH:/home/air/.local/bin"
 #[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 alias l="eza --icons=always"
 alias ll="eza -a --show-symlinks --icons=always"
-eval "$(zoxide init zsh)"
-alias cd="z"
+
+# eval "$(zoxide init zsh)"
+# alias cd="z"
+
 # export IDF_PATH=~/proj/esp32/esp8266/ESP8266_RTOS_SDK
 #source ~/esptoolenv/bin/activat
 alias esp="NVIM_APPNAME=nvim-esp32 nvim"
@@ -136,13 +138,13 @@ export PATH=~/.local/bin:"$PATH"
 export PATH="$PATH:~/.cargo/bin"
 
 function ya() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
 	rm -f -- "$tmp"
 }
-
+# xset s off
+# xset r rate 200 25  
 # Added by LM Studio CLI tool (lms)
-export PATH="$PATH:/home/air/.lmstudio/bin"
+# export PATH="$PATH:/home/air/.lmstudio/bin"
