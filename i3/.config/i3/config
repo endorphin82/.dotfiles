@@ -23,24 +23,37 @@ set $mod Mod4
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 
-exec --no-startup-id xset r rate 200 25  
-exec --no-startup-id xset s off
+exec xset r rate 200 25  
+#screensaver off
+exec xset s off
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 exec --no-startup-id zen-browser
 exec --no-startup-id Telegram
-exec --no-startup-id viber
-exec --no-startup-id walc
-
+# exec --no-startup-id viber
+# exec --no-startup-id walc
+# exec --no-startup-id cage -- waydroid show-full-ui
+# for_window [class=""] fullscreen enable
 #Assign windows 
 # to find out the class, run:
 # xprop | grep WM_CLASS
 
 assign [class="zen"] "1" 
-assign [class="TelegramDesktop" instance="telegram-desktop"] "2" 
+assign [class="TelegramDesktop"] "2" 
 assign [class="ViberPC"] "2" 
 assign [class="walc"] "2" 
+# assign [class="cage"] "3" 
+assign [class="cage"] "3" 
 
+for_window [class="cage"] fullscreen enable
+
+# Запуск Waydroid на 3-му просторі у 4K (через Cage)
+bindsym $mod+Ctrl+a exec --no-startup-id cage -- waydroid show-full-ui
+
+# Повне швидке вимкнення Waydroid однією кнопкою
+bindsym $mod+Ctrl+x exec --no-startup-id "waydroid session stop; sudo w
+
+exec --no-startup-id xxkb
 #Disable notebook display 
 exec_always --no-startup-id xrandr --output eDP-1 --off --output HDMI-1 --auto
 exec_always --no-startup-id feh --bg-fill ~/Pictures/Wallpaper/colorful-fish-ripple-purple-background-girly-backgrounds-4000x3000-7591.png

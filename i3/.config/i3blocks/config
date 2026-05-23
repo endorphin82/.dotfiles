@@ -4,6 +4,19 @@ color=#E0E0E0
 separator=true
 separator_block_width=10
 
+[journal]
+command=journalctl -o cat -n 1
+interval=1
+
+[layout]
+command=xkblayout-state print "%s:%n" &&echo 
+interval=1
+
+# [currency]
+# command=curl  -s "https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5"| jq --raw-output ".[]|.ccy, .sale" |tr "\n" " " &&echo -e "\n"
+# interval=600
+# color=#00ff00
+
 # [weather]
 # # label=☀️ 
 # markup=pango
@@ -12,13 +25,18 @@ separator_block_width=10
 # interval=1800
 # color=#FFFFFF
 
-[weather]
-full_text=☂ฺ ☀ฺ Weather ☂ฺ ☀ฺ
-# command=~/.config/i3/scripts/weather
-interval=1800
-color=#8ec07c
-#separator=true
-separator_block_width=20
+# [weather]
+# label=☀️ 
+# command=curl -s "https://sinoptik.ua/kharkiv | xmllint --html --xpath "//p[@class='today-temp']/text()" - 
+# interval=600
+
+# [weather]
+# full_text=☂ฺ ☀ฺ Weather ☂ฺ ☀ฺ
+# # command=~/.config/i3/scripts/weather
+# interval=1800
+# color=#8ec07c
+# #separator=true
+# separator_block_width=20
 # Рівень гучності (PipeWire / Audio)
 # [volume]
 # label=🔊 
@@ -52,14 +70,14 @@ color=#3498DB
 # interval=once
 # signal=12
 # color=#9B59B6
-[keyboard]
-label=⌨️ 
-# command=xkb-switch | tr '[:lower:]' '[:upper:]'
-command=setxkbmap -query | awk '/layout/ {print toupper($2)}' | cut -d, -f1
-interval=once
-signal=12
-color=#9B59B6
 
+# label=⌨️ 
+# # command=xkb-switch | tr '[:lower:]' '[:upper:]'
+# command=setxkbmap -query | awk '/layout/ {print toupper($2)}' | cut -d, -f1
+# interval=once
+# signal=12
+# color=#9B59B6
+#
 # Яскравість екрана ноутбука
 # [brightness]
 # label=☀️ 
