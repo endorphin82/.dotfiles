@@ -137,13 +137,23 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 export PATH=~/.local/bin:"$PATH"
 export PATH="$PATH:~/.cargo/bin"
 
+# function ya() {
+# 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+# 	command yazi "$@" --cwd-file="$tmp"
+# 	IFS= read -r -d '' cwd < "$tmp"
+# 	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+# 	rm -f -- "$tmp"
+# }
+
 function ya() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	command yazi "$@" --cwd-file="$tmp"
-	IFS= read -r -d '' cwd < "$tmp"
-	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
 	rm -f -- "$tmp"
 }
+export PICO_SDK_PATH=~/.pico-sdk
 # xset s off
 # xset r rate 200 25  
 # Added by LM Studio CLI tool (lms)

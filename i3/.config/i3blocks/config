@@ -12,6 +12,11 @@ interval=1
 command=xkblayout-state print "%s:%n" &&echo 
 interval=1
 
+[bluetooth]
+label=
+command=~/.config/i3blocks/bluetooth-count.sh
+interval=10
+
 # [currency]
 # command=curl  -s "https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5"| jq --raw-output ".[]|.ccy, .sale" |tr "\n" " " &&echo -e "\n"
 # interval=600
@@ -44,12 +49,21 @@ interval=1
 # interval=3
 # signal=10
 # color=#2ECC71
+[weather]
+command=~/.config/i3blocks/weather.sh
+interval=1800
+# [disk]
+# label=💾 
+# command=df -h / | awk 'NR==2 {print $4}'
+# interval=30
+# color=#2ECC71
 
 [disk]
 label=💾 
-command=df -h / | awk 'NR==2 {print $4}'
+# command=FREE=$(df -m / | awk 'NR==2 {print $4}'); if [ "$FREE" -lt 25600 ]; then echo "#E74C3C"; else echo "#2ECC71"; fi; df -h / | awk 'NR==2 {print $4}'
+command=~/.config/i3blocks/disk_check.sh
 interval=30
-color=#2ECC71
+# click_into=baobab /
 
 # Використання оперативної пам'яті (RAM)
 [memory]
@@ -95,7 +109,9 @@ color=#3498DB
 
 [cpu_usage]
 interval=1
-command=./cpu.sh
+# command=./cpu.sh
+# command=if [ "$BLOCK_BUTTON" -eq 1 ]; then gnome-system-monitor; else ./cpu.sh; fi
+command=if [ "$BLOCK_BUTTON" -eq 1 ]; then xfce4-taskmanager; else ./cpu.sh; fi
 min_width=⣾⣄ 100.00%
 
 # Температура процесора (важливо для ноутбуків)
@@ -109,10 +125,12 @@ color=#E74C3C
 [volume]
 # label=🔊 
 # command=wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)"%"}'
-command=MUTED=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -o "MUTED"); VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}'); if [ "$MUTED" = "MUTED" ] || [ "$VOL" -eq 0 ]; then echo "🔇 MUTE"; else echo "🔊 $VOL%"; fi
+# command=MUTED=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -o "MUTED"); VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}'); if [ "$MUTED" = "MUTED" ] || [ "$VOL" -eq 0 ]; then echo "🔇 MUTE"; else echo "🔊 $VOL%"; fi
+command=if [ "$BLOCK_BUTTON" -eq 1 ]; then pavucontrol; else MUTED=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -o "MUTED"); VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}'); if [ "$MUTED" = "MUTED" ] || [ "$VOL" -eq 0 ]; then echo "🔇 MUTE"; else echo "🔊 $VOL%"; fi; fi
 interval=once
 signal=10
 color=#2ECC71
+on-click=pavucontrol
 
 # Стан батареї (динамічний колір залежно від розряду)
 [battery]

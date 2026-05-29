@@ -30,7 +30,7 @@ exec xset s off
 # they are included here as an example. Modify as you see fit.
 exec --no-startup-id zen-browser
 exec --no-startup-id Telegram
-# exec --no-startup-id viber
+exec --no-startup-id viber
 # exec --no-startup-id walc
 # exec --no-startup-id cage -- waydroid show-full-ui
 # for_window [class=""] fullscreen enable
@@ -38,14 +38,18 @@ exec --no-startup-id Telegram
 # to find out the class, run:
 # xprop | grep WM_CLASS
 
+#UXterm apply settings
+exec [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources &
+exec --no-startup-id dunst
+
 assign [class="zen"] "1" 
 assign [class="TelegramDesktop"] "2" 
 assign [class="ViberPC"] "2" 
-assign [class="walc"] "2" 
+# assign [class="walc"] "2" 
 # assign [class="cage"] "3" 
-assign [class="cage"] "3" 
+# assign [class="cage"] "3" 
 
-for_window [class="cage"] fullscreen enable
+# for_window [class="cage"] fullscreen enable
 
 # Запуск Waydroid на 3-му просторі у 4K (через Cage)
 bindsym $mod+Ctrl+a exec --no-startup-id cage -- waydroid show-full-ui

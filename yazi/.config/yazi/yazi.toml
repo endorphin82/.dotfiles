@@ -1,7 +1,9 @@
 # A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
 # If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
 
-"$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
+# "$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
+
+# "$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
 
 [opener]
 edit = [
@@ -10,6 +12,22 @@ edit = [
 
 [open]
 rules = [
-    { name = "*.*", use = "edit" },
+    # { name = "*.*", use = "edit" },
     { mime = "text/*", use = "edit" },
 ]
+[manager]
+show_hidden = true
+
+[plugin]
+preloaders = [
+	{ mime = "image/*", run = "image" },
+	{ mime = "video/*", run = "video" },
+	{ mime = "application/pdf", run = "pdf" },
+]
+previewers = [
+	{ mime = "image/*", run = "image" },
+	{ mime = "video/*", run = "video" },
+	{ mime = "application/pdf", run = "pdf" },
+	{ mime = "text/*", run = "code" },
+]
+
