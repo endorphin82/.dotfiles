@@ -13,9 +13,10 @@ command=xkblayout-state print "%s:%n" &&echo
 interval=1
 
 [bluetooth]
-label=
-command=~/.config/i3blocks/bluetooth-count.sh
-interval=10
+label= 
+command=if [ "$BLOCK_BUTTON" -eq 1 ]; then ~/.config/i3blocks/toggle_bluetooth.sh; fi; if bluetoothctl show 2>/dev/null | grep -q "Powered: yes"; then DEVICES=$(bluetoothctl devices Connected 2>/dev/null | wc -l); echo "$DEVICES"; else echo "OFF"; fi
+interval=1
+color=#4c7899
 
 # [currency]
 # command=curl  -s "https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5"| jq --raw-output ".[]|.ccy, .sale" |tr "\n" " " &&echo -e "\n"
@@ -95,7 +96,7 @@ color=#3498DB
 # Яскравість екрана ноутбука
 # [brightness]
 # label=☀️ 
-# command=brightnessctl -m | awk -F, '{print int(($3/$4)*100)"%"}'
+# command=brightnescommand=if [ "$BLOCK_BUTTON" -eq 1 ]; then if xdotool search --onlyvisible --class "pavucontrol" > /dev/null 2>&1; then pkill -x pavucontrol; else pavucontrol & fi; fi; MUTED=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -o "MUTED"); VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}'); if [ "$MUTED" = "MUTED" ] || [ "$VOL" -eq 0 ]; then echo "🔇 MUTE"; else echo "🔊 $VOL%"; fisctl -m | awk -F, '{print int(($3/$4)*100)"%"}'
 # interval=once
 # signal=11
 # color=#F1C40F
@@ -110,8 +111,7 @@ color=#3498DB
 [cpu_usage]
 interval=1
 # command=./cpu.sh
-# command=if [ "$BLOCK_BUTTON" -eq 1 ]; then gnome-system-monitor; else ./cpu.sh; fi
-command=if [ "$BLOCK_BUTTON" -eq 1 ]; then xfce4-taskmanager; else ./cpu.sh; fi
+command=if [ "$BLOCK_BUTTON" -eq 1 ]; then ~/.config/i3blocks/toggle_taskmanager.sh; fi; ./cpu.sh
 min_width=⣾⣄ 100.00%
 
 # Температура процесора (важливо для ноутбуків)
@@ -124,9 +124,7 @@ color=#E74C3C
 # Рівень гучності (PipeWire / Audio)
 [volume]
 # label=🔊 
-# command=wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)"%"}'
-# command=MUTED=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -o "MUTED"); VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}'); if [ "$MUTED" = "MUTED" ] || [ "$VOL" -eq 0 ]; then echo "🔇 MUTE"; else echo "🔊 $VOL%"; fi
-command=if [ "$BLOCK_BUTTON" -eq 1 ]; then pavucontrol; else MUTED=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -o "MUTED"); VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}'); if [ "$MUTED" = "MUTED" ] || [ "$VOL" -eq 0 ]; then echo "🔇 MUTE"; else echo "🔊 $VOL%"; fi; fi
+command=if [ "$BLOCK_BUTTON" -eq 1 ]; then ~/.config/i3blocks/toggle_pavucontrol.sh; elif [ "$BLOCK_BUTTON" -eq 4 ]; then wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; elif [ "$BLOCK_BUTTON" -eq 5 ]; then wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; fi; MUTED=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -o "MUTED"); VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}'); if [ "$MUTED" = "MUTED" ] || [ "$VOL" -eq 0 ]; then echo "🔇 MUTE"; else echo "🔊 $VOL%"; fi
 interval=once
 signal=10
 color=#2ECC71
