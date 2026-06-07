@@ -8,15 +8,15 @@ separator_block_width=10
 command=journalctl -o cat -n 1
 interval=1
 
-[layout]
-command=xkblayout-state print "%s:%n" &&echo 
-interval=1
-
 [bluetooth]
 label= 
 command=if [ "$BLOCK_BUTTON" -eq 1 ]; then ~/.config/i3blocks/toggle_bluetooth.sh; fi; if bluetoothctl show 2>/dev/null | grep -q "Powered: yes"; then DEVICES=$(bluetoothctl devices Connected 2>/dev/null | wc -l); echo "$DEVICES"; else echo "OFF"; fi
 interval=1
 color=#4c7899
+
+[layout]
+command=xkblayout-state print "%s:%n" &&echo 
+interval=1
 
 # [currency]
 # command=curl  -s "https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5"| jq --raw-output ".[]|.ccy, .sale" |tr "\n" " " &&echo -e "\n"
@@ -51,7 +51,8 @@ color=#4c7899
 # signal=10
 # color=#2ECC71
 [weather]
-command=~/.config/i3blocks/weather.sh
+# command=~/.config/i3blocks/weather.sh
+command=~/.config/i3blocks/wttr-kharkiv
 interval=1800
 # [disk]
 # label=💾 
@@ -121,15 +122,6 @@ command=sensors | awk '/Core 0/ {print $3}'
 interval=1
 color=#E74C3C
 
-# Рівень гучності (PipeWire / Audio)
-[volume]
-# label=🔊 
-command=if [ "$BLOCK_BUTTON" -eq 1 ]; then ~/.config/i3blocks/toggle_pavucontrol.sh; elif [ "$BLOCK_BUTTON" -eq 4 ]; then wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; elif [ "$BLOCK_BUTTON" -eq 5 ]; then wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; fi; MUTED=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -o "MUTED"); VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}'); if [ "$MUTED" = "MUTED" ] || [ "$VOL" -eq 0 ]; then echo "🔇 MUTE"; else echo "🔊 $VOL%"; fi
-interval=once
-signal=10
-color=#2ECC71
-on-click=pavucontrol
-
 # Стан батареї (динамічний колір залежно від розряду)
 [battery]
 command=STATUS=$(acpi -b | awk -F, '{print $1}' | awk '{print $3}'); PERC=$(acpi -b | awk -F, '{print $2}' | tr -d ' %'); if [ "$STATUS" = "Charging" ]; then echo "⚡ $PERC%"; elif [ "$PERC" -le 20 ]; then echo "🪫 $PERC%"; else echo "🔋 $PERC%"; fi
@@ -143,3 +135,12 @@ label=📅
 command=date '+%A_%u %B_%m %d %H:%M'
 interval=5
 color=#1ABC9C
+
+# Рівень гучності (PipeWire / Audio)
+[volume]
+# label=🔊 
+command=if [ "$BLOCK_BUTTON" -eq 1 ]; then ~/.config/i3blocks/toggle_pavucontrol.sh; elif [ "$BLOCK_BUTTON" -eq 4 ]; then wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; elif [ "$BLOCK_BUTTON" -eq 5 ]; then wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; fi; MUTED=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -o "MUTED"); VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}'); if [ "| $MUTED |" = "MUTED |" ] || [ "$VOL |" -eq 0 ]; then echo "| 🔇 MUTE |"; else echo "| 🔊 $VOL% |"; fi
+interval=once
+signal=10
+color=#2ECC71
+on-click=pavucontrol

@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# i3blocks weather block — wttr.in/Kharkiv
+# ─────────────────────────────────────────
+# Install:
+#   cp wttr-kharkiv ~/.config/i3blocks/scripts/
+#   chmod +x ~/.config/i3blocks/scripts/wttr-kharkiv
+#
+# i3blocks.conf:
+#   [weather]
+#   command=~/.config/i3blocks/scripts/wttr-kharkiv
+#   interval=1800
+#   color=#87CEEB
+
+CITY="${WTTR_CITY:-Kharkiv}"
+BASE="https://uk.wttr.in"
+
+# ── Option A: simple one-liner format (fastest, no extra deps) ───────────────
+# Symbols: %c=condition icon %t=temp %f=feels-like %h=humidity %w=wind
+DATA=$(curl -sf --max-time 5 \
+    "${BASE}/${CITY}?format=%25c+%25t,+%D0%B2%D1%96%D0%B4%D1%87.+%25f+%7C+%25h+%25w" \
+    2>/dev/null)
+# That URL-encoded format string equals: "%c %t, відч. %f | %h %w"
+
+# ── Option B: format=4  (plain, no emoji — safe fallback) ───────────────────
+if [[ -z "$DATA" ]]; then
+    DATA=$(curl -sf --max-time 5 "${BASE}/${CITY}?format=4" 2>/dev/null)
+fi
+
+# ── Option C: JSON — full control via jq (uncomment to use) ─────────────────
+# Requires: jq
+# JSON=$(curl -sf --max-time 5 "${BASE}/${CITY}?format=j1")
+# if [[ -n "$JSON" ]]; then
+#     TEMP=$(jq -r '.current_condition[0].temp_C'           <<< "$JSON")
+#     FEELS=$(jq -r '.current_condition[0].FeelsLikeC'      <<< "$JSON")
+#     HUM=$(jq -r  '.current_condition[0].humidity'         <<< "$JSON")
+#     WSPD=$(jq -r '.current_condition[0].windspeedKmph'    <<< "$JSON")
+#     WDIR=$(jq -r '.current_condition[0].winddir16Point'   <<< "$JSON")
+#     DESC=$(jq -r '.current_condition[0].lang_uk[0].value' <<< "$JSON")
+#     DATA="⛅ ${DESC} ${TEMP}°C (відч. ${FEELS}°C) 💧${HUM}% 💨${WSPD}км/г ${WDIR}"
+# fi
+
+# ── output ───────────────────────────────────────────────────────────────────
+if [[ -z "$DATA" ]]; then
+    echo "⚠ wttr.in недоступний"
+    exit 33        # i3blocks: keep last known value, don't blank the block
+fi
+
+echo "$DATA"
