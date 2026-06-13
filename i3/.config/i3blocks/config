@@ -136,6 +136,11 @@ command=date '+%A_%u %B_%m %d %H:%M'
 interval=5
 color=#1ABC9C
 
+[screenshot]
+full_text=📷✂️
+command=if [ "$BLOCK_BUTTON" -eq 1 ]; then maim --select | tee "/home/$USER/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png" | xclip -selection clipboard -t image/png; fi
+interval=once
+
 # Рівень гучності (PipeWire / Audio)
 [volume]
 # label=🔊 

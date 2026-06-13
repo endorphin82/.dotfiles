@@ -41,6 +41,7 @@ exec --no-startup-id viber
 #UXterm apply settings
 exec [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources &
 exec --no-startup-id dunst
+exec --no-startup-id wmname LG3D
 
 assign [class="zen"] "1" 
 assign [class="TelegramDesktop"] "2" 
@@ -59,7 +60,7 @@ bindsym $mod+Ctrl+x exec --no-startup-id "waydroid session stop; sudo w
 
 exec --no-startup-id xxkb
 #Disable notebook display 
-exec_always --no-startup-id xrandr --output eDP-1 --off --output HDMI-1 --auto
+exec_always --no-startup-id xrandr --output eDP-1 --off --output HDMI-1 --auto --scale .70x.70
 exec_always --no-startup-id feh --bg-fill ~/Pictures/Wallpaper/colorful-fish-ripple-purple-background-girly-backgrounds-4000x3000-7591.png
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
@@ -289,12 +290,12 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        font pango:monospace 14
+        font pango:monospace 11
         # status_command i3status
         status_command i3blocks
         position top
 }
-        font pango:monospace 14
+        font pango:monospace 10
 
 ## Screenshots
 bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/Screenshots/$(date).png"
