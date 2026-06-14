@@ -138,7 +138,14 @@ color=#1ABC9C
 
 [screenshot]
 full_text=📷✂️
-command=if [ "$BLOCK_BUTTON" -eq 1 ]; then maim --select | tee "/home/$USER/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png" | xclip -selection clipboard -t image/png; fi
+command=if [ $BLOCK_BUTTON -eq 1 ]; then (sleep 2; maim --select | tee /home/$USER/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png | xclip -selection clipboard -t image/png) & fi
+# command=if [ $BLOCK_BUTTON -eq 1 ]; then sleep 2; maim --select | tee /home/$USER/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png | xclip -selection clipboard -t image/png; fi
+# command=if [ "$BLOCK_BUTTON" -eq 1 ]; then maim --select | tee "/home/$USER/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png" | xclip -selection clipboard -t image/png; fi
+interval=once
+
+[rofi]
+full_text=>_
+command=case "$BLOCK_BUTTON" in 1) rofi -modi drun,run -show drun ;; esac
 interval=once
 
 # Рівень гучності (PipeWire / Audio)
