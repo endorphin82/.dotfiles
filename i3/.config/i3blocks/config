@@ -81,7 +81,7 @@ color=#a6e3a1
 
 [screenshot]
 full_text=
-command=if [ "${BLOCK_BUTTON:-0}" -eq 1 ]; then (sleep 2; maim --select | tee /home/$USER/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png | xclip -selection clipboard -t image/png) & fi
+command=if [ "${BLOCK_BUTTON:-0}" -eq 1 ]; then (sleep 2; maim --select | tee /home/$USER/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png | xclip -selection clipboard -t image/png) >/dev/null 2>&1 & fi
 interval=once
 
 [rofi]
