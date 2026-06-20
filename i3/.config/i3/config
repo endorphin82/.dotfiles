@@ -140,7 +140,7 @@ exec_always --no-startup-id setxkbmap -layout "us,ua" -option "grp:win_space_tog
 exec --no-startup-id setxkbmap -layout "us,ua" -option ""
 
 # Скрипт i3: при натисканні Win+Space мова перемикається по колу, і одразу надсилається сигнал 12
-bindsym $mod+space exec --no-startup-id "if setxkbmap -query | grep -q 'layout
+bindsym $mod+space exec --no-startup-id setxkbmap -query | grep -q 'us' && setxkbmap ua || setxkbmap us; pkill -RTMIN+12 i3blocks
 
 floating_modifier $mod
 

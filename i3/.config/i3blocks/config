@@ -24,6 +24,8 @@ color=#89b4fa
 [layout]
 command=xkblayout-state print "%s" | sed 's/^us$/EN/; s/^ua$/UA/' && echo
 interval=1
+signal=12
+color=#ff8800
 
 [weather]
 command=~/.config/i3blocks/scripts/wttr-kharkiv
@@ -36,7 +38,7 @@ interval=30
 min_width= 999G
 
 [memory]
-label=
+label= 
 command=LANG=C free -h | awk '/^Mem:/ {print $3 "/" $2}'
 interval=10
 color=#89b4fa

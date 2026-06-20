@@ -45,4 +45,4 @@ if [[ -z "$DATA" ]]; then
     exit 33        # i3blocks: keep last known value, don't blank the block
 fi
 
-echo "$DATA"
+echo "$DATA" | sed 's/ //'
