@@ -15,9 +15,9 @@ done
 if [ "$COUNT" -gt 0 ]; then
   echo " $COUNT"
   echo " $COUNT"
-  echo "#70c0b1" # Color when devices are connected
+  echo "#89b4fa" # Color when devices are connected
 else
   echo " 0"
   echo " 0"
-  echo "#555555" # Color when no devices are connected
+  echo "#585b70" # Color when no devices are connected
 fi

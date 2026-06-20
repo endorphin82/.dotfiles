@@ -1,0 +1,62 @@
+# eza alias
+alias ls='eza --icons=always'
+alias l='eza -1 --icons=always'
+alias ll='eza -l --icons=always'
+alias la='eza -la --icons=always'
+alias lt='eza --tree --icons=always'
+alias llt='eza -l --tree --level=2 --icons=always'
+alias lh='eza -lh --header --icons=always'
+alias lg='eza -la --git --icons=always'
+alias lS='eza -1 --icons=always --sort=size'
+alias lM='eza -1 --icons=always --sort=modified'
+alias tre='eza --tree --icons=always --level=3 --git-ignore'
+
+# fzf configuration
+export FZF_DEFAULT_OPTS=" \
+  --layout=reverse \
+  --info=inline \
+  --height=40% \
+  --border \
+  --preview-window=right:60% \
+"
+# zoxide configuration
+# eval "$(zoxide init zsh)"
+# alias cd="z"
+
+# other configuration
+alias cg="cargo generate --vcs none --git https://github.com/esp-rs/esp-idf-template cargo"
+
+export FZF_CTRL_R_OPTS=" \
+  --preview 'echo {}' \
+  --preview-window=down:3:wrap \
+  --sort \
+"
+
+if command -v fd &> /dev/null; then
+  export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+else
+  export FZF_DEFAULT_COMMAND='find . -prune -o -type f -print -o -type l -print 2> /dev/null | sed '\''s/^\.\///'\'''
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND='find . -prune -o -type d -print 2> /dev/null | sed '\''s/^\.\///'\'''
+fi
+
+export FZF_CTRL_T_OPTS=" \
+  --preview 'bat --color=always --style=numbers --line-range :500 {}' \
+  --bind '?:toggle-preview' \
+"
+
+export FZF_ALT_C_OPTS=" \
+  --preview 'tree -C {} | head -200' \
+  --bind '?:toggle-preview' \
+"
+
+# Environment variables
+# export PATH=$HOME/Projects/dart/flutter/bin:$PATH
+export CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+export GOPATH=$HOME/.go
+export PATH=~/.local/bin:"$PATH"
+export PATH="$PATH:~/.cargo/bin"
+export PATH=$PATH:~/.platformio/penv/bin

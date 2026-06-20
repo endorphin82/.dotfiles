@@ -40,6 +40,8 @@ else
 fi
 
 echo -ne ${graph[${val[0]}${val[1]}]}${graph[${val[2]}${val[3]}]}
-printf " %.2f%%\n" $((usage / 100)).$((usage % 100))
+pct=$((usage / 100))
+[ "$pct" -ge 100 ] && pct=99
+printf "%d\n" "$pct"
 
 echo ${val[@]} >$SAVE2

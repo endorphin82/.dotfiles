@@ -158,3 +158,6 @@ export PICO_SDK_PATH=~/.pico-sdk
 # xset r rate 200 25  
 # Added by LM Studio CLI tool (lms)
 # export PATH="$PATH:/home/air/.lmstudio/bin"
+
+# opencode
+export PATH=/home/air/.opencode/bin:$PATH

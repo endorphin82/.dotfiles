@@ -1,146 +1,87 @@
 # Глобальні налаштування
 align=center
-color=#E0E0E0
+color=#cdd6f4
 separator=true
 separator_block_width=10
+markup=pango
+# markup=none
 
 [journal]
 command=journalctl -o cat -n 1
-interval=1
+interval=30
+
+[airquality]
+command=$HOME/.config/i3blocks/scripts/ens160.sh
+interval=60
+markup=none
 
 [bluetooth]
-label= 
-command=if [ "$BLOCK_BUTTON" -eq 1 ]; then ~/.config/i3blocks/toggle_bluetooth.sh; fi; if bluetoothctl show 2>/dev/null | grep -q "Powered: yes"; then DEVICES=$(bluetoothctl devices Connected 2>/dev/null | wc -l); echo "$DEVICES"; else echo "OFF"; fi
+label=
+command=if [ "${BLOCK_BUTTON:-0}" -eq 1 ]; then ~/.config/i3blocks/scripts/toggle_bluetooth.sh; fi; if bluetoothctl show 2>/dev/null | grep -q "Powered: yes"; then DEVICES=$(bluetoothctl devices Connected 2>/dev/null | wc -l); echo "$DEVICES"; else echo "OFF"; fi
 interval=1
-color=#4c7899
+color=#89b4fa
 
 [layout]
-command=xkblayout-state print "%s:%n" &&echo 
+command=xkblayout-state print "%s" | sed 's/^us$/EN/; s/^ua$/UA/' && echo
 interval=1
 
-# [currency]
-# command=curl  -s "https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5"| jq --raw-output ".[]|.ccy, .sale" |tr "\n" " " &&echo -e "\n"
-# interval=600
-# color=#00ff00
-
-# [weather]
-# # label=☀️ 
-# markup=pango
-# separator=true
-# command=~/.config/i3/scripts/w.py Kharkiv
-# interval=1800
-# color=#FFFFFF
-
-# [weather]
-# label=☀️ 
-# command=curl -s "https://sinoptik.ua/kharkiv | xmllint --html --xpath "//p[@class='today-temp']/text()" - 
-# interval=600
-
-# [weather]
-# full_text=☂ฺ ☀ฺ Weather ☂ฺ ☀ฺ
-# # command=~/.config/i3/scripts/weather
-# interval=1800
-# color=#8ec07c
-# #separator=true
-# separator_block_width=20
-# Рівень гучності (PipeWire / Audio)
-# [volume]
-# label=🔊 
-# command=wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)"%"}'
-# interval=3
-# signal=10
-# color=#2ECC71
 [weather]
-# command=~/.config/i3blocks/weather.sh
-command=~/.config/i3blocks/wttr-kharkiv
+command=~/.config/i3blocks/scripts/wttr-kharkiv
 interval=1800
-# [disk]
-# label=💾 
-# command=df -h / | awk 'NR==2 {print $4}'
-# interval=30
-# color=#2ECC71
+color=#89dceb
 
 [disk]
-label=💾 
-# command=FREE=$(df -m / | awk 'NR==2 {print $4}'); if [ "$FREE" -lt 25600 ]; then echo "#E74C3C"; else echo "#2ECC71"; fi; df -h / | awk 'NR==2 {print $4}'
-command=~/.config/i3blocks/disk_check.sh
+command=~/.config/i3blocks/scripts/disk_check.sh
 interval=30
-# click_into=baobab /
+min_width= 999G
 
-# Використання оперативної пам'яті (RAM)
 [memory]
-label=🧠 
-command=free -h | awk '/^Mem:/ {print $3 "/" $2}'
+label=
+command=LANG=C free -h | awk '/^Mem:/ {print $3 "/" $2}'
 interval=10
-color=#3498DB
+color=#89b4fa
+min_width= 7.5G/7.5G
 
-# [keyboard]
-# label=⌨️ 
-# command=setxkbmap -query | awk '/layout/ {print toupper($2)}' | cut -d, -f1
-# interval=once
-# signal=12
-# color=#9B59B6
-# [keyboard]
-# label=⌨️ 
-# command=if xset q | grep -q "LED mask:  00000000"; then echo "US"; else echo "UA"; fi
-# interval=once
-# signal=12
-# color=#9B59B6
-
-# label=⌨️ 
-# # command=xkb-switch | tr '[:lower:]' '[:upper:]'
-# command=setxkbmap -query | awk '/layout/ {print toupper($2)}' | cut -d, -f1
-# interval=once
-# signal=12
-# color=#9B59B6
-#
-# Яскравість екрана ноутбука
-# [brightness]
-# label=☀️ 
-# command=brightnescommand=if [ "$BLOCK_BUTTON" -eq 1 ]; then if xdotool search --onlyvisible --class "pavucontrol" > /dev/null 2>&1; then pkill -x pavucontrol; else pavucontrol & fi; fi; MUTED=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -o "MUTED"); VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}'); if [ "$MUTED" = "MUTED" ] || [ "$VOL" -eq 0 ]; then echo "🔇 MUTE"; else echo "🔊 $VOL%"; fisctl -m | awk -F, '{print int(($3/$4)*100)"%"}'
-# interval=once
-# signal=11
-# color=#F1C40F
-
-# Бездротова мережа (Wi-Fi)
 [wifi]
-label=📶 
+label= 
 command=WLAN=$(ip route | awk '/default/ {print $5}' | grep '^w'); if [ -n "$WLAN" ]; then iwgetid -r $WLAN; else echo "down"; fi
 interval=10
-color=#3498DB
+color=#89b4fa
+# min_width= 1234567890
+
+[network_speed]
+command=~/.config/i3blocks/scripts/network_speed.sh
+interval=2
+color=#a6adc8
+min_width=.9MB99.9MB
 
 [cpu_usage]
 interval=1
-# command=./cpu.sh
-command=if [ "$BLOCK_BUTTON" -eq 1 ]; then ~/.config/i3blocks/toggle_taskmanager.sh; fi; ./cpu.sh
-min_width=⣾⣄ 100.00%
+command=if [ "${BLOCK_BUTTON:-0}" -eq 1 ]; then ~/.config/i3blocks/scripts/toggle_taskmanager.sh; fi; ~/.config/i3blocks/scripts/cpu.sh
+min_width=⣿⣿99
 
-# Температура процесора (важливо для ноутбуків)
 [temperature]
-label=🌡️ 
-command=sensors | awk '/Core 0/ {print $3}'
-interval=1
-color=#E74C3C
-
-# Стан батареї (динамічний колір залежно від розряду)
-[battery]
-command=STATUS=$(acpi -b | awk -F, '{print $1}' | awk '{print $3}'); PERC=$(acpi -b | awk -F, '{print $2}' | tr -d ' %'); if [ "$STATUS" = "Charging" ]; then echo "⚡ $PERC%"; elif [ "$PERC" -le 20 ]; then echo "🪫 $PERC%"; else echo "🔋 $PERC%"; fi
+label=
+command=sensors | awk '/^Package id 0:/ {print $4}' | sed 's/\.[0-9]*°C//'
 interval=10
-color=#E67E22
+color=#f38ba8
+# min_width= +99.9°C
 
-# Дата та час
+[battery]
+command=STATUS=$(acpi -b | awk -F, '{print $1}' | awk '{print $3}'); PERC=$(acpi -b | awk -F, '{print $2}' | tr -d ' %'); if [ "$STATUS" = "Charging" ]; then echo " $PERC%"; elif [ "$PERC" -le 20 ]; then echo " $PERC%"; else echo " $PERC%"; fi
+interval=10
+color=#f9e2af
+min_width= 100%
+
 [time]
-label=📅 
-# command=date '+%d.%m %H:%M'
+label= 
 command=date '+%A_%u %B_%m %d %H:%M'
 interval=5
-color=#1ABC9C
+color=#a6e3a1
 
 [screenshot]
-full_text=📷✂️
-command=if [ $BLOCK_BUTTON -eq 1 ]; then (sleep 2; maim --select | tee /home/$USER/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png | xclip -selection clipboard -t image/png) & fi
-# command=if [ $BLOCK_BUTTON -eq 1 ]; then sleep 2; maim --select | tee /home/$USER/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png | xclip -selection clipboard -t image/png; fi
-# command=if [ "$BLOCK_BUTTON" -eq 1 ]; then maim --select | tee "/home/$USER/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png" | xclip -selection clipboard -t image/png; fi
+full_text=
+command=if [ "${BLOCK_BUTTON:-0}" -eq 1 ]; then (sleep 2; maim --select | tee /home/$USER/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png | xclip -selection clipboard -t image/png) & fi
 interval=once
 
 [rofi]
@@ -148,11 +89,9 @@ full_text=>_
 command=case "$BLOCK_BUTTON" in 1) rofi -modi drun,run -show drun ;; esac
 interval=once
 
-# Рівень гучності (PipeWire / Audio)
 [volume]
-# label=🔊 
-command=if [ "$BLOCK_BUTTON" -eq 1 ]; then ~/.config/i3blocks/toggle_pavucontrol.sh; elif [ "$BLOCK_BUTTON" -eq 4 ]; then wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; elif [ "$BLOCK_BUTTON" -eq 5 ]; then wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; fi; MUTED=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -o "MUTED"); VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}'); if [ "| $MUTED |" = "MUTED |" ] || [ "$VOL |" -eq 0 ]; then echo "| 🔇 MUTE |"; else echo "| 🔊 $VOL% |"; fi
+command=~/.config/i3blocks/scripts/volume.sh
 interval=once
 signal=10
-color=#2ECC71
-on-click=pavucontrol
+color=#a6e3a1
+min_width= 100%
