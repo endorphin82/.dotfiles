@@ -17,9 +17,9 @@ BASE="https://uk.wttr.in"
 # ── Option A: simple one-liner format (fastest, no extra deps) ───────────────
 # Symbols: %c=condition icon %t=temp %f=feels-like %h=humidity %w=wind
 DATA=$(curl -sf --max-time 5 \
-    "${BASE}/${CITY}?format=%25c+%25t,+%D0%B2%D1%96%D0%B4%D1%87.+%25f+%7C+%25h+%25w" \
+    "${BASE}/${CITY}?format=%25c%25t,%D0%B2%D1%96%D0%B4%D1%87.%25f%7C%25h%25w" \
     2>/dev/null)
-# That URL-encoded format string equals: "%c %t, відч. %f | %h %w"
+# That URL-encoded format string equals: "%c%t,відч.%f|%h%w"
 
 # ── Option B: format=4  (plain, no emoji — safe fallback) ───────────────────
 if [[ -z "$DATA" ]]; then
