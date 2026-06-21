@@ -69,6 +69,10 @@ interval=10
 color=#f38ba8
 # min_width= +99.9°C
 
+[screensaver]
+command=~/.config/i3blocks/scripts/toggle_screensaver.sh
+interval=once
+
 [battery]
 command=STATUS=$(acpi -b | awk -F, '{print $1}' | awk '{print $3}'); PERC=$(acpi -b | awk -F, '{print $2}' | tr -d ' %'); if [ "$STATUS" = "Charging" ]; then echo " $PERC%"; elif [ "$PERC" -le 20 ]; then echo " $PERC%"; else echo " $PERC%"; fi
 interval=10
