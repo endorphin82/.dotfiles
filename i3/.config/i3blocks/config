@@ -6,12 +6,12 @@ separator_block_width=10
 markup=pango
 # markup=none
 
-[journal]
-command=journalctl -o cat -n 1
-interval=30
+# [journal]
+# command=journalctl -o cat -n 1
+# interval=30
 
 [airquality]
-command=$HOME/.config/i3blocks/scripts/ens160.sh
+command=TEMP_OFFSET=0 HUM_OFFSET=0 $HOME/.config/i3blocks/scripts/ens160.sh
 interval=60
 markup=none
 
@@ -60,7 +60,7 @@ min_width=.9MB99.9MB
 [cpu_usage]
 interval=1
 command=if [ "${BLOCK_BUTTON:-0}" -eq 1 ]; then ~/.config/i3blocks/scripts/toggle_taskmanager.sh; fi; ~/.config/i3blocks/scripts/cpu.sh
-min_width=⣿⣿99
+min_width=⣿⣿99/99
 
 [temperature]
 label=

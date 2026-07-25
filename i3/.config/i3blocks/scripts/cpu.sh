@@ -42,6 +42,17 @@ fi
 echo -ne ${graph[${val[0]}${val[1]}]}${graph[${val[2]}${val[3]}]}
 pct=$((usage / 100))
 [ "$pct" -ge 100 ] && pct=99
-printf "%d\n" "$pct"
+printf "%d" "$pct"
+
+MAX=$(cat /sys/class/drm/card1/gt_max_freq_mhz)
+MIN=$(cat /sys/class/drm/card1/gt_min_freq_mhz)
+ACT=$(cat /sys/class/drm/card1/gt_act_freq_mhz)
+if [ "$ACT" -le "$MIN" ]; then
+    gpu_pct=0
+else
+    gpu_pct=$(( (ACT - MIN) * 100 / (MAX - MIN) ))
+    [ "$gpu_pct" -gt 100 ] && gpu_pct=100
+fi
+printf "/%d\n" "$gpu_pct"
 
 echo ${val[@]} >$SAVE2
